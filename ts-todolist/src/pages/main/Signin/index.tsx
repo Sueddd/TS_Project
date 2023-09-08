@@ -2,7 +2,7 @@ import { styled } from "styled-components";
 import { Auto, MainBackColor, MainColor } from "../../../style/common";
 import { useNavigate } from "react-router-dom";
 
-const SignIn: React.FC = (): JSX.Element => {
+const SignIn = (): JSX.Element => {
   const nav = useNavigate();
   return (
     <>

@@ -3,13 +3,8 @@ import styled from "styled-components";
 import { Auto, MainBackColor, MainColor, MainFont } from "../../style/common";
 import { useNavigate } from "react-router-dom";
 
-// props로 넘겨줘야 할 지 아직 필요성을 못느낌
-type IntroProps = {
-  name: string;
-};
-
 // html을 리턴하니까 JSX.Element로 타입 주기
-const Intro: React.FC = (): JSX.Element => {
+const Intro = (): JSX.Element => {
   const nav = useNavigate();
   return (
     <>

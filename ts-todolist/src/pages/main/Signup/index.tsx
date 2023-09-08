@@ -1,7 +1,7 @@
 import { styled } from "styled-components";
 import { Auto, MainBackColor, MainColor } from "../../../style/common";
 
-const SignUp: React.FC = (): JSX.Element => {
+const SignUp = (): JSX.Element => {
   return (
     <>
       <S.Container>
