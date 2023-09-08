@@ -36,14 +36,7 @@ const SignUp: React.FC = (): JSX.Element => {
 };
 
 export default SignUp;
-const GoSigin = styled.div`
-  border: none;
-  ${Auto}
-  ${MainColor}
-  font-size: 15px;
-  cursor: pointer;
-  margin-top: 14px;
-`;
+
 const Btn = styled.button`
   ${MainBackColor};
   border: none;
