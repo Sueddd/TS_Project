@@ -2,10 +2,10 @@ import { postList } from "./postdata";
 import { rest } from "msw";
 
 // 데이터 받아와줌
-type PostList = {
+export type PostList = {
   title: string;
   description: string;
-  // img: string;
+  img: string;
 };
 
 // 데이터 조회

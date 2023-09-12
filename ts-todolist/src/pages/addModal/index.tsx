@@ -1,8 +1,16 @@
 import { styled } from "styled-components";
 import { Auto, MainBackColor } from "../../style/common";
 import { useState } from "react";
+import { useForm } from "react-hook-form";
 
 const AddModal = (): JSX.Element => {
+  const {
+    handleSubmit,
+    control,
+    watch,
+    setValue,
+    formState: { errors },
+  } = useForm();
   const [imgSrc, setImgSrc]: any = useState(null);
 
   const onUpload = (e: any) => {
@@ -32,13 +40,7 @@ const AddModal = (): JSX.Element => {
           ></input>
           <ImgContainer>
             <div>
-              +<img width={"50%"} src={imgSrc}></img>
-            </div>
-            <div>
-              +<img width={"50%"} src={imgSrc}></img>
-            </div>
-            <div>
-              +<img></img>
+              <Img width={"50%"} src={imgSrc}></Img>
             </div>
           </ImgContainer>
         </S.InputWrapper>
@@ -57,15 +59,23 @@ const AddModal = (): JSX.Element => {
 };
 
 export default AddModal;
+
+const Img = styled.img`
+  width: 100px;
+  height: 100px;
+`;
+
 const ImgContainer = styled.div`
   display: flex;
   div {
     border: 1px solid black;
     width: 100px;
     height: 100px;
-    margin-left: 30px;
+    margin-top: 0px;
+    /* margin-left: 30px; */
   }
 `;
+
 const Btn = styled.button`
   ${MainBackColor};
   border: none;
@@ -80,8 +90,9 @@ const Btn = styled.button`
 
 const InputWrapper = styled.div`
   /* border: 1px solid black; */
-  ${Auto}
+  /* ${Auto} */
   margin-top: 30px;
+  margin-left: 23px;
   :focus {
     outline: none;
   }
