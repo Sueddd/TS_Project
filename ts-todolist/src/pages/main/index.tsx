@@ -1,26 +1,17 @@
+import { useEffect, useState } from "react";
 import OnePost from "./onepost";
+import axios from "axios";
 
 const Main = (): JSX.Element => {
-  type OneProps = {
-    list: {
-      title: string;
-      description: string;
-    }[];
-  };
-  const list = [
-    {
-      title: "하이",
-      description: "하이하이ㅏ힝",
-    },
-    {
-      title: "바이",
-      description: "바이바이바이ㅏ",
-    },
-  ];
+  const [dataList, setDataList] = useState([]);
+  useEffect(() => {
+    axios.get("/datas").then((res) => setDataList(res.data));
+  }, []);
+
   return (
     <>
-      {list.map((v) => (
-        <OnePost data={v} />
+      {dataList.map((v, index) => (
+        <OnePost key={index} data={v} />
       ))}
     </>
   );
