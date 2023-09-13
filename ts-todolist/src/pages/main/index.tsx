@@ -8,11 +8,11 @@ import { PostList } from "../../mocks/api";
 const Main = (): JSX.Element => {
   const [dataList, setDataList] = useState<PostList[]>([]);
   const nav = useNavigate();
-  
-  useEffect(() => {
-    axios.get("/datas").then((res) => setDataList(res.data));
-  }, []);
 
+  useEffect(() => {
+    axios.get<PostList[]>("/datas").then((res) => setDataList(res.data));
+  }, []);
+  console.log("추가", dataList);
   return (
     <>
       <Container>

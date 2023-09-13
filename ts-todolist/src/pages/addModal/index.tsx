@@ -2,17 +2,33 @@ import { styled } from "styled-components";
 import { Auto, MainBackColor } from "../../style/common";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import OneController from "./onecontroller";
+import { Schema } from "../../consts/schema";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { Controller } from "react-hook-form";
+import { ErrorMessage } from "@hookform/error-message";
+import axios from "axios";
+import { PostList } from "../../mocks/api";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 const AddModal = (): JSX.Element => {
+  interface FormValues {
+    title: string;
+    description: string;
+  }
+
   const {
     handleSubmit,
     control,
     watch,
     setValue,
     formState: { errors },
-  } = useForm();
-  const [imgSrc, setImgSrc]: any = useState(null);
+  } = useForm<FormValues>({
+    resolver: yupResolver(Schema),
+    mode: "onChange",
+  });
 
+  const [imgSrc, setImgSrc]: any = useState(null);
   const onUpload = (e: any) => {
     const file = e.target.files[0];
     const reader = new FileReader();
@@ -26,39 +42,65 @@ const AddModal = (): JSX.Element => {
     });
   };
 
+  const onSubmit = (data: FormValues) => {
+    console.log(data);
+    axios.post<PostList>("/datas", data);
+  };
+
   return (
     <>
-      <S.Container>
-        <S.InputWrapper>
-          {/** 사진 파일 등록 */}
-          <S.Word>IMAGE</S.Word>
-          <input
-            accept="image/*"
-            multiple
-            type="file"
-            onChange={(e) => onUpload(e)}
-          ></input>
-          <ImgContainer>
-            <div>
-              <Img width={"50%"} src={imgSrc}></Img>
-            </div>
-          </ImgContainer>
-        </S.InputWrapper>
-        <S.InputWrapper>
-          <S.Word>TITLE</S.Word>
-          <TitleInput placeholder="제목을 입력해 주세요"></TitleInput>
-        </S.InputWrapper>
-        <S.InputWrapper>
-          <S.Word>DESCRIPTION</S.Word>
-          <S.DescriptionInput></S.DescriptionInput>
-        </S.InputWrapper>
-        <Btn>ADD</Btn>
-      </S.Container>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <S.Container>
+          <S.InputWrapper>
+            {/** 사진 파일 등록 */}
+            <S.Word>IMAGE</S.Word>
+            <input
+              accept="image/*"
+              multiple
+              type="file"
+              onChange={(e) => onUpload(e)}
+            ></input>
+            <ImgContainer>
+              <div>
+                <Img width={"50%"} src={imgSrc}></Img>
+              </div>
+            </ImgContainer>
+          </S.InputWrapper>
+          <S.InputWrapper>
+            <S.Word>TITLE</S.Word>
+            <OneController name="title" control={control} errors={errors} />
+          </S.InputWrapper>
+          <S.InputWrapper>
+            <S.Word>DESCRIPTION</S.Word>
+            <Controller
+              name="description"
+              control={control}
+              render={({ field }) => (
+                <DescriptionInput
+                  {...field}
+                  placeholder="내용을 입력해 주세요"
+                />
+              )}
+            />
+            {errors.description && (
+              <ErrorBox>{errors.description.message}</ErrorBox>
+            )}
+          </S.InputWrapper>
+          <Btn>ADD</Btn>
+        </S.Container>
+      </form>
     </>
   );
 };
 
 export default AddModal;
+
+const ErrorBox = styled.div`
+  color: #fe6161;
+  font-size: 12px;
+  margin-top: 10px;
+  font-weight: bold;
+`;
 
 const Img = styled.img`
   width: 100px;
