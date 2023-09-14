@@ -1,24 +1,25 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import OnePost from "./onepost";
 import axios from "axios";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { PostList } from "../../mocks/api";
 
-const Main = (): JSX.Element => {
+const Main = () => {
   const [dataList, setDataList] = useState<PostList[]>([]);
   const nav = useNavigate();
 
   useEffect(() => {
     axios.get<PostList[]>("/datas").then((res) => setDataList(res.data));
   }, []);
-  console.log("추가", dataList);
+
+  // 타입에 data들어가 있던 거 빼기. 
   return (
     <>
       <Container>
         <Btn onClick={() => nav("/addpost")}>ADD POST</Btn>
         {dataList.map((v, index) => (
-          <OnePost key={index} data={v} />
+          <OnePost key={index} postdata = {v}/>
         ))}
       </Container>
     </>

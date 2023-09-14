@@ -1,34 +1,41 @@
 import { styled } from "styled-components";
 import { Auto, MainBackColor, MainColor } from "../../../style/common";
+import OneController from "../../addModal/onecontroller";
+import { useForm } from "react-hook-form";
+import { PostList } from "../../../mocks/api";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { Schema } from "../../../consts/schema";
+import { OneObj } from "../../../consts/signuparray";
 
 const SignUp = (): JSX.Element => {
+  const {
+    handleSubmit,
+    control,
+    watch,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(Schema),
+    mode: "onChange",
+  });
+
   return (
     <>
       <S.Container>
-        <S.InputWrapper>
-          <S.InputTitle>Email</S.InputTitle>
-          <S.Input placeholder="ex) summer123@naver.com"></S.Input>
-        </S.InputWrapper>
-        <S.InputWrapper>
-          <S.InputTitle>Password</S.InputTitle>
-          <S.Input placeholder="password"></S.Input>
-        </S.InputWrapper>
-        <S.InputWrapper>
-          <S.InputTitle>Password Confirm</S.InputTitle>
-          <S.Input placeholder="password confirm"></S.Input>
-        </S.InputWrapper>
-        <S.InputWrapper>
-          <S.InputTitle>Nick Name</S.InputTitle>
-          <S.Input placeholder="nick name"></S.Input>
-        </S.InputWrapper>
-        <S.InputWrapper>
-          <S.InputTitle>Address</S.InputTitle>
-          <S.Input placeholder="address"></S.Input>
-        </S.InputWrapper>
-        <S.InputWrapper>
-          <S.InputTitle>Phone</S.InputTitle>
-          <S.Input placeholder="phone-number"></S.Input>
-        </S.InputWrapper>
+        {OneObj.map((v) => {
+          return (
+            <>
+              <InputWrapper>
+                <Word>{v.title}</Word>
+                <OneController
+                  name={v.name}
+                  placeholder={v.placeholder}
+                  control={control}
+                  errors={errors}
+                />
+              </InputWrapper>
+            </>
+          );
+        })}
         <Btn>Sign-in</Btn>
       </S.Container>
     </>
@@ -36,7 +43,11 @@ const SignUp = (): JSX.Element => {
 };
 
 export default SignUp;
-
+const Word = styled.div`
+  font-size: 16px;
+  font-weight: bold;
+  color: #4d4c4c;
+`;
 const Btn = styled.button`
   ${MainBackColor};
   border: none;
@@ -60,26 +71,11 @@ const InputWrapper = styled.div`
   }
 `;
 
-const InputTitle = styled.div`
-  font-size: 16px;
-  font-weight: bold;
-  color: #4d4c4c;
-`;
-
-const Input = styled.input`
-  border: none;
-  border-bottom: 1px solid #d8d8d8;
-  width: 350px;
-  padding-bottom: 9px;
-  ${Auto}
-  margin-top: 20px;
-`;
-
 const Container = styled.div`
   border: 1px solid #d8d8d8;
   border-radius: 4px;
   width: 450px;
-  height: 630px;
+  height: 460px;
   ${Auto}
   margin-top: 110px;
   display: flex;
@@ -89,8 +85,6 @@ const Container = styled.div`
 
 const S = {
   Container,
-  Input,
   InputWrapper,
-  InputTitle,
   Btn,
 };

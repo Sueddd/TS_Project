@@ -9,40 +9,33 @@ import { Controller } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
 import axios from "axios";
 import { PostList } from "../../mocks/api";
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
-const AddModal = (): JSX.Element => {
-  interface FormValues {
-    title: string;
-    description: string;
-  }
-
+const AddModal = () => {
   const {
     handleSubmit,
     control,
     watch,
-    setValue,
     formState: { errors },
-  } = useForm<FormValues>({
+  } = useForm({
     resolver: yupResolver(Schema),
     mode: "onChange",
   });
 
-  const [imgSrc, setImgSrc]: any = useState(null);
-  const onUpload = (e: any) => {
-    const file = e.target.files[0];
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    return new Promise<void>((resolve) => {
-      reader.onload = () => {
-        const src = reader.result;
-        setImgSrc(reader.result || null); // 파일의 컨텐츠
-        resolve();
-      };
-    });
-  };
+  // const [imgSrc, setImgSrc]: any = useState(null);
+  // const onUpload = (e: any) => {
+  //   const file = e.target.files[0];
+  //   const reader = new FileReader();
+  //   reader.readAsDataURL(file);
+  //   return new Promise<void>((resolve) => {
+  //     reader.onload = () => {
+  //       const src = reader.result;
+  //       setImgSrc(reader.result || null); // 파일의 컨텐츠
+  //       resolve();
+  //     };
+  //   });
+  // };
 
-  const onSubmit = (data: FormValues) => {
+  const onSubmit = (data: PostList) => {
     console.log(data);
     axios.post<PostList>("/datas", data);
   };
@@ -52,23 +45,25 @@ const AddModal = (): JSX.Element => {
       <form onSubmit={handleSubmit(onSubmit)}>
         <S.Container>
           <S.InputWrapper>
-            {/** 사진 파일 등록 */}
             <S.Word>IMAGE</S.Word>
-            <input
+            {/* <input
               accept="image/*"
               multiple
               type="file"
               onChange={(e) => onUpload(e)}
-            ></input>
+            ></input> */}
             <ImgContainer>
-              <div>
-                <Img width={"50%"} src={imgSrc}></Img>
-              </div>
+              <div>{/* <Img width={"50%"} src={imgSrc}></Img> */}</div>
             </ImgContainer>
           </S.InputWrapper>
           <S.InputWrapper>
             <S.Word>TITLE</S.Word>
-            <OneController name="title" control={control} errors={errors} />
+            <OneController
+              name="title"
+              control={control}
+              errors={errors}
+              placeholder="제목을 입력해 주세요"
+            />
           </S.InputWrapper>
           <S.InputWrapper>
             <S.Word>DESCRIPTION</S.Word>

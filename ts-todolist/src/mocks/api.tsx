@@ -2,7 +2,6 @@ import { postList } from "./postdata";
 import { rest } from "msw";
 
 // 데이터 받아와줌
-
 export type PostList = {
   title: string;
   description: string;

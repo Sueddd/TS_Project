@@ -1,14 +1,11 @@
 import styled from "styled-components";
 
 type OnePostProps = {
-  data: {
-    title: string;
-    description: string;
-    // img: string
-  };
+  postdata: { title: string; description: string };
+  // img: string
 };
 
-const OnePost: React.FC<OnePostProps> = ({ data }): JSX.Element => {
+const OnePost: React.FC<OnePostProps> = ({ postdata }): JSX.Element => {
   return (
     <>
       <Container>
@@ -20,8 +17,8 @@ const OnePost: React.FC<OnePostProps> = ({ data }): JSX.Element => {
             <Btn>edit</Btn>
             <Btn>delete</Btn>
           </BtnWrapper>
-          <Title>{data.title}</Title>
-          <Description>{data.description}</Description>
+          <Title>{postdata.title}</Title>
+          <Description>{postdata.description}</Description>
         </Wrapper>
       </Container>
     </>
