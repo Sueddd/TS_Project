@@ -1,32 +1,31 @@
 import { styled } from "styled-components";
 import { Auto, MainBackColor, MainColor } from "../../../style/common";
-import OneController from "../../addModal/onecontroller";
 import { useForm } from "react-hook-form";
 import { PostList } from "../../../mocks/api";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Schema } from "../../../consts/schema";
-import { OneObj } from "../../../consts/signuparray";
+import { CheckList } from "../../../consts/signuparray";
+import OneInput from "./oneInput";
+import { SignSchema } from "../../../consts/signupSchema";
 
 const SignUp = (): JSX.Element => {
   const {
     handleSubmit,
     control,
-    watch,
     formState: { errors },
   } = useForm({
-    resolver: yupResolver(Schema),
+    resolver: yupResolver(SignSchema),
     mode: "onChange",
   });
 
   return (
     <>
       <S.Container>
-        {OneObj.map((v) => {
+        {CheckList.map((v) => {
           return (
             <>
               <InputWrapper>
                 <Word>{v.title}</Word>
-                <OneController
+                <OneInput
                   name={v.name}
                   placeholder={v.placeholder}
                   control={control}

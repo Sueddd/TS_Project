@@ -4,23 +4,45 @@ import axios from "axios";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { PostList } from "../../mocks/api";
+import AddModal from "../addModal";
 
-const Main = () => {
+const Main: React.FC = () => {
   const [dataList, setDataList] = useState<PostList[]>([]);
-  const nav = useNavigate();
+  const [isOpen, setIsOpen] = React.useState<boolean>(false);
 
   useEffect(() => {
     axios.get<PostList[]>("/datas").then((res) => setDataList(res.data));
   }, []);
 
-  // 타입에 data들어가 있던 거 빼기. 
+  const deletePost = (id: number) => {
+    setDataList(dataList.filter((v) => v.id !== id));
+  };
+
+  const editPost = (id: number, title: string, description: string) => {
+    const _dataList = [...dataList];
+    const post = _dataList.find((v) => v.id === id);
+    if (post !== undefined) {
+      post.title = title;
+      post.description = description;
+    }
+    setDataList(_dataList);
+  };
+
+  // 타입에 data들어가 있던 거 빼기.
   return (
     <>
       <Container>
-        <Btn onClick={() => nav("/addpost")}>ADD POST</Btn>
+        <Btn onClick={() => setIsOpen(true)}>ADD POST</Btn>
         {dataList.map((v, index) => (
-          <OnePost key={index} postdata = {v}/>
+          <OnePost key={index} postdata={v} onDelete={() => deletePost(v.id)} />
         ))}
+        {isOpen && (
+          <AddModal
+            setIsOpen={setIsOpen}
+            dataList={dataList}
+            setDataList={setDataList}
+          />
+        )}
       </Container>
     </>
   );

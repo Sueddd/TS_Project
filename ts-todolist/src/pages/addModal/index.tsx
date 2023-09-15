@@ -7,54 +7,41 @@ import { Schema } from "../../consts/schema";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Controller } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
-import axios from "axios";
 import { PostList } from "../../mocks/api";
 
-const AddModal = () => {
+interface Props {
+  setIsOpen: (value: boolean) => void;
+  dataList: PostList[];
+  setDataList: (value: PostList[]) => void;
+}
+
+const AddModal: React.FC<Props> = ({ setIsOpen, dataList, setDataList }) => {
   const {
     handleSubmit,
     control,
-    watch,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(Schema),
     mode: "onChange",
   });
 
-  // const [imgSrc, setImgSrc]: any = useState(null);
-  // const onUpload = (e: any) => {
-  //   const file = e.target.files[0];
-  //   const reader = new FileReader();
-  //   reader.readAsDataURL(file);
-  //   return new Promise<void>((resolve) => {
-  //     reader.onload = () => {
-  //       const src = reader.result;
-  //       setImgSrc(reader.result || null); // 파일의 컨텐츠
-  //       resolve();
-  //     };
-  //   });
-  // };
-
   const onSubmit = (data: PostList) => {
-    console.log(data);
-    axios.post<PostList>("/datas", data);
+    setDataList([...dataList, data]);
   };
 
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit)}>
         <S.Container>
+          <CloseBtn onClick={() => setIsOpen(false)}>x</CloseBtn>
           <S.InputWrapper>
-            <S.Word>IMAGE</S.Word>
-            {/* <input
-              accept="image/*"
-              multiple
-              type="file"
-              onChange={(e) => onUpload(e)}
-            ></input> */}
-            <ImgContainer>
-              <div>{/* <Img width={"50%"} src={imgSrc}></Img> */}</div>
-            </ImgContainer>
+            <S.Word>ID</S.Word>
+            <OneController
+              name="id"
+              control={control}
+              errors={errors}
+              placeholder="아이디를 입력해 주세요"
+            />
           </S.InputWrapper>
           <S.InputWrapper>
             <S.Word>TITLE</S.Word>
@@ -81,7 +68,7 @@ const AddModal = () => {
               <ErrorBox>{errors.description.message}</ErrorBox>
             )}
           </S.InputWrapper>
-          <Btn>ADD</Btn>
+          <Btn type="submit">ADD</Btn>
         </S.Container>
       </form>
     </>
@@ -90,27 +77,21 @@ const AddModal = () => {
 
 export default AddModal;
 
+const CloseBtn = styled.button`
+  width: 22px;
+  height: 22px;
+  align-items: center;
+  border: none;
+  background-color: white;
+  margin-left: 420px;
+  padding-bottom: 10px;
+`;
+
 const ErrorBox = styled.div`
   color: #fe6161;
   font-size: 12px;
   margin-top: 10px;
   font-weight: bold;
-`;
-
-const Img = styled.img`
-  width: 100px;
-  height: 100px;
-`;
-
-const ImgContainer = styled.div`
-  display: flex;
-  div {
-    border: 1px solid black;
-    width: 100px;
-    height: 100px;
-    margin-top: 0px;
-    /* margin-left: 30px; */
-  }
 `;
 
 const Btn = styled.button`
@@ -126,8 +107,6 @@ const Btn = styled.button`
 `;
 
 const InputWrapper = styled.div`
-  /* border: 1px solid black; */
-  /* ${Auto} */
   margin-top: 30px;
   margin-left: 23px;
   :focus {
@@ -158,7 +137,7 @@ const Container = styled.div`
   border: 1px solid #d8d8d8;
   border-radius: 4px;
   width: 450px;
-  height: 600px;
+  height: 660px;
   ${Auto}
   margin-top: 100px;
   display: flex;

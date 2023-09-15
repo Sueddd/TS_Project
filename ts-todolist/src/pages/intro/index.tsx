@@ -4,7 +4,7 @@ import { Auto, MainBackColor, MainColor, MainFont } from "../../style/common";
 import { useNavigate } from "react-router-dom";
 
 // html을 리턴하니까 JSX.Element로 타입 주기
-const Intro = (): JSX.Element => {
+const Intro = () => {
   const nav = useNavigate();
   return (
     <>

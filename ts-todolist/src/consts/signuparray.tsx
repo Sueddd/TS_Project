@@ -1,4 +1,4 @@
-export const OneObj = [
+export const CheckList = [
   {
     title: "Email",
     name: "email",

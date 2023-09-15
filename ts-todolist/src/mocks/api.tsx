@@ -3,6 +3,7 @@ import { rest } from "msw";
 
 // 데이터 받아와줌
 export type PostList = {
+  id: number;
   title: string;
   description: string;
 };

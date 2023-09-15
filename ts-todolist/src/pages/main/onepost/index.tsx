@@ -1,22 +1,22 @@
+import { useState } from "react";
 import styled from "styled-components";
 
 type OnePostProps = {
-  postdata: { title: string; description: string };
-  // img: string
+  postdata: { id: number; title: string; description: string };
+  onDelete: (value: number) => void;
 };
 
-const OnePost: React.FC<OnePostProps> = ({ postdata }): JSX.Element => {
+const OnePost: React.FC<OnePostProps> = ({ postdata, onDelete }) => {
   return (
     <>
       <Container>
-        <Img
-        // src={data.img} width={50}
-        ></Img>
+        <Img></Img>
         <Wrapper>
           <BtnWrapper>
             <Btn>edit</Btn>
-            <Btn>delete</Btn>
+            <Btn onClick={() => onDelete(postdata.id)}>delete</Btn>
           </BtnWrapper>
+          <Id>{postdata.id}</Id>
           <Title>{postdata.title}</Title>
           <Description>{postdata.description}</Description>
         </Wrapper>
@@ -24,7 +24,13 @@ const OnePost: React.FC<OnePostProps> = ({ postdata }): JSX.Element => {
     </>
   );
 };
+
 export default OnePost;
+
+const Id = styled.div`
+  color: white;
+`;
+
 const BtnWrapper = styled.div`
   width: 110px;
   margin-left: 350px;
