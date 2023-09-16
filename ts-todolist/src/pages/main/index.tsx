@@ -34,7 +34,12 @@ const Main: React.FC = () => {
       <Container>
         <Btn onClick={() => setIsOpen(true)}>ADD POST</Btn>
         {dataList.map((v, index) => (
-          <OnePost key={index} postdata={v} onDelete={() => deletePost(v.id)} />
+          <OnePost
+            key={index}
+            postdata={v}
+            onDelete={() => deletePost(v.id)}
+            editPost={editPost}
+          />
         ))}
         {isOpen && (
           <AddModal

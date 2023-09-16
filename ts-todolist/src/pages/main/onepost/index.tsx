@@ -1,24 +1,55 @@
 import { useState } from "react";
 import styled from "styled-components";
+import useInput from "../../../hooks/useInput";
 
 type OnePostProps = {
   postdata: { id: number; title: string; description: string };
   onDelete: (value: number) => void;
+  editPost: (id: number, title: string, description: string) => void;
 };
 
-const OnePost: React.FC<OnePostProps> = ({ postdata, onDelete }) => {
+const OnePost: React.FC<OnePostProps> = ({ postdata, onDelete, editPost }) => {
+  const [editMode, setEditMode] = useState<boolean>(false);
+
+  // postdata를 props로 받아온 거기 때문에 id, title, description을 여기서도 구조분해할당
+  const { id, title, description } = postdata;
+  const [editTitle, setEditTitle] = useInput(title);
+  const [editDescription, setEditDescription] = useInput(description);
+
+  const onClickEdit = () => {
+    if (!editMode) return setEditMode(true);
+    editPost(id, editTitle, editDescription);
+    setEditMode(false);
+  };
+
   return (
     <>
       <Container>
         <Img></Img>
         <Wrapper>
           <BtnWrapper>
-            <Btn>edit</Btn>
+            <Btn onClick={onClickEdit}>edit</Btn>
             <Btn onClick={() => onDelete(postdata.id)}>delete</Btn>
           </BtnWrapper>
+
           <Id>{postdata.id}</Id>
-          <Title>{postdata.title}</Title>
-          <Description>{postdata.description}</Description>
+          <Title>
+            {editMode ? (
+              <textarea value={editTitle} onChange={setEditTitle}></textarea>
+            ) : (
+              title
+            )}
+          </Title>
+          <Description>
+            {editMode ? (
+              <textarea
+                value={editDescription}
+                onChange={setEditDescription}
+              ></textarea>
+            ) : (
+              description
+            )}
+          </Description>
         </Wrapper>
       </Container>
     </>
