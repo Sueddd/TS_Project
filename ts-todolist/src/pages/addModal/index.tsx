@@ -8,6 +8,10 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { Controller } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
 import { PostList } from "../../mocks/api";
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
+import { RootState } from "../../reducer";
+import { addPost } from "../../action/crud_action";
 
 interface Props {
   setIsOpen: (value: boolean) => void;
@@ -25,10 +29,15 @@ const AddModal: React.FC<Props> = ({ setIsOpen, dataList, setDataList }) => {
     mode: "onChange",
   });
 
-  const onSubmit = (data: PostList) => {
-    setDataList([...dataList, data]);
-  };
+  const addData = useSelector((state: RootState) => state.post.addData);
+  const dispatch = useDispatch();
 
+  const onSubmit = (data: PostList) => {
+    // setDataList([...dataList, data]);
+    dispatch(addPost(data));
+    console.log(addData);
+  };
+  
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit)}>

@@ -2,11 +2,16 @@ import React, { useEffect, useState } from "react";
 import OnePost from "./onepost";
 import axios from "axios";
 import styled from "styled-components";
-import { useNavigate } from "react-router-dom";
 import { PostList } from "../../mocks/api";
 import AddModal from "../addModal";
+import { useSelector } from "react-redux";
+import { RootState } from "../../reducer";
+import { useDispatch } from "react-redux";
+import { deletePost } from "../../action/crud_action";
 
 const Main: React.FC = () => {
+  const addData = useSelector((state: RootState) => state.post.addData);
+  const dispatch = useDispatch();
   const [dataList, setDataList] = useState<PostList[]>([]);
   const [isOpen, setIsOpen] = React.useState<boolean>(false);
 
@@ -14,8 +19,12 @@ const Main: React.FC = () => {
     axios.get<PostList[]>("/datas").then((res) => setDataList(res.data));
   }, []);
 
-  const deletePost = (id: number) => {
-    setDataList(dataList.filter((v) => v.id !== id));
+  const deletePosts = (id: number) => {
+    // setDataList(dataList.filter((v) => v.id !== id));
+    const postData = addData.find((v) => v.id === id);
+    if (postData) {
+      dispatch(deletePost(postData));
+    }
   };
 
   const editPost = (id: number, title: string, description: string) => {
@@ -28,16 +37,15 @@ const Main: React.FC = () => {
     setDataList(_dataList);
   };
 
-  // 타입에 data들어가 있던 거 빼기.
   return (
     <>
       <Container>
         <Btn onClick={() => setIsOpen(true)}>ADD POST</Btn>
-        {dataList.map((v, index) => (
+        {addData.map((v, index) => (
           <OnePost
             key={index}
             postdata={v}
-            onDelete={() => deletePost(v.id)}
+            onDelete={() => deletePosts(v.id)}
             editPost={editPost}
           />
         ))}
