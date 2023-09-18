@@ -1,6 +1,5 @@
 import { combineReducers } from "redux";
 import addReducer from "./crud_reducer";
-import { addPropsType } from "../action/crud_action";
 
 const rootReducer = combineReducers({
   post: addReducer,

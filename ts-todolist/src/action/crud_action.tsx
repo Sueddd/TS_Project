@@ -1,4 +1,3 @@
-import { idText } from "typescript";
 import { ADD_POST, DELETE_POST } from "./types";
 
 export interface addPropsType {

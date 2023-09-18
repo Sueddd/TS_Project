@@ -1,5 +1,5 @@
 import { ADD_POST, DELETE_POST } from "../action/types";
-import { addPost, deletePost } from "../action/crud_action";
+import { addPost } from "../action/crud_action";
 import { PostList } from "../mocks/api";
 
 // 리듀서 파라미터 중 initialState의 타입 정의
