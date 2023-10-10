@@ -8,7 +8,6 @@ import { worker } from "./mocks/handlers";
 import { Provider } from "react-redux";
 import rootReducer from "./reducer";
 import { createStore } from "redux";
-import addReducer from "./reducer/crud_reducer";
 
 if (process.env.NODE_ENV === "development") {
   worker.start();

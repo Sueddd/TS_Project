@@ -37,9 +37,6 @@ const OneController: React.FC<AppProps> = ({
 export default OneController;
 
 const Input = styled.input`
-  /* border: none;
-  border-bottom: 1px solid #d8d8d8;
-  width: 400px; */
   border: none;
   border-bottom: 1px solid #d8d8d8;
   width: 350px;

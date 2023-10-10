@@ -22,9 +22,10 @@ const Main: React.FC = () => {
   const deletePosts = (id: number) => {
     // setDataList(dataList.filter((v) => v.id !== id));
     const postData = addData.find((v) => v.id === id);
-    if (postData) {
-      dispatch(deletePost(postData));
-    }
+    // if (postData) {
+    //   dispatch(deletePost(postData));
+    // }
+    postData && dispatch(deletePost(postData));
   };
 
   const editPost = (id: number, title: string, description: string) => {

@@ -1,5 +1,4 @@
 import * as yup from "yup";
-import { REGEX } from "./regex";
 export const Schema = yup.object().shape({
   title: yup
     .string()
