@@ -1,12 +1,7 @@
 import { useState } from "react";
 import styled from "styled-components";
 import useInput from "../../../hooks/useInput";
-
-type OnePostProps = {
-  postdata: { id: number; title: string; description: string };
-  onDelete: (value: number) => void;
-  editPost: (id: number, title: string, description: string) => void;
-};
+import { OnePostProps } from "../../../action/types";
 
 const OnePost: React.FC<OnePostProps> = ({ postdata, onDelete, editPost }) => {
   const [editMode, setEditMode] = useState<boolean>(false);

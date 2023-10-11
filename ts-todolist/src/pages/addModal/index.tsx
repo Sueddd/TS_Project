@@ -12,14 +12,11 @@ import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { RootState } from "../../reducer";
 import { addPost } from "../../action/crud_action";
+import { AddModalProps } from "../../action/types";
 
-interface Props {
-  setIsOpen: (value: boolean) => void;
-  dataList: PostList[];
-  setDataList: (value: PostList[]) => void;
-}
 
-const AddModal: React.FC<Props> = ({ setIsOpen, dataList, setDataList }) => {
+
+const AddModal: React.FC<AddModalProps> = ({ setIsOpen, dataList, setDataList }) => {
   const {
     handleSubmit,
     control,

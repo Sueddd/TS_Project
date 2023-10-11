@@ -2,13 +2,7 @@ import { Controller } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
 import styled from "styled-components";
 import { Auto } from "../../../style/common";
-
-interface AppProps {
-  name: string;
-  control: any;
-  errors: any;
-  placeholder: string;
-}
+import { AppProps } from "../../../action/types";
 
 const OneController: React.FC<AppProps> = ({
   name,
