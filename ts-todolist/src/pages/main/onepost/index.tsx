@@ -26,7 +26,7 @@ const OnePost: React.FC<OnePostProps> = ({ postdata, onDelete, editPost }) => {
             <Btn onClick={onClickEdit}>edit</Btn>
             <Btn onClick={() => onDelete(postdata.id)}>delete</Btn>
           </BtnWrapper>
-
+          <div>helo</div>
           <Id>{postdata.id}</Id>
           <Title>
             {editMode ? (

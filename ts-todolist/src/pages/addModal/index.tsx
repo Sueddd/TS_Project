@@ -14,9 +14,11 @@ import { RootState } from "../../reducer";
 import { addPost } from "../../action/crud_action";
 import { AddModalProps } from "../../action/types";
 
-
-
-const AddModal: React.FC<AddModalProps> = ({ setIsOpen, dataList, setDataList }) => {
+const AddModal: React.FC<AddModalProps> = ({
+  setIsOpen,
+  dataList,
+  setDataList,
+}) => {
   const {
     handleSubmit,
     control,
@@ -30,11 +32,10 @@ const AddModal: React.FC<AddModalProps> = ({ setIsOpen, dataList, setDataList })
   const dispatch = useDispatch();
 
   const onSubmit = (data: PostList) => {
-    // setDataList([...dataList, data]);
     dispatch(addPost(data));
     console.log(addData);
   };
-  
+
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit)}>
