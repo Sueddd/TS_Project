@@ -33,7 +33,6 @@ const AddModal: React.FC<AddModalProps> = ({
 
   const onSubmit = (data: PostList) => {
     dispatch(addPost(data));
-    console.log(addData);
   };
 
   return (

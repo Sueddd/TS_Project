@@ -6,7 +6,6 @@ import { OnePostProps } from "../../../action/types";
 const OnePost: React.FC<OnePostProps> = ({ postdata, onDelete, editPost }) => {
   const [editMode, setEditMode] = useState<boolean>(false);
 
-  // postdata를 props로 받아온 거기 때문에 id, title, description을 여기서도 구조분해할당
   const { id, title, description } = postdata;
   const [editTitle, setEditTitle] = useInput(title);
   const [editDescription, setEditDescription] = useInput(description);
